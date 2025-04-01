@@ -3,15 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Тест AudioPlayer</title>
+    <title>Тест двух аудиоплееров</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .player-wrapper {
+            margin-bottom: 40px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+        }
+        .player-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-    <h1>Тестирование кастомного аудиоплеера</h1>
+    <h1>Тестирование двух версий аудиоплееров</h1>
     
-    <audio-player src="Klang Lobby.mp3"></audio-player>
-    <script src="audioPlayer.js"></script>
+    <div class="player-wrapper">
+        <div class="player-title">Версия 1 (расширенный плеер):</div>
+        <audio-player src="Klang Lobby.mp3"></audio-player>
+    </div>
+    
+    <div class="player-wrapper">
+        <div class="player-title">Версия 2 (упрощенный плеер):</div>
+        <audio-player2 src="Klang Lobby.mp3"></audio-player2>
+    </div>
 
-    <audio-player2 src="Klang Lobby.mp3"></audio-player2>
-    <script src="audioPlayer2.js"></script> 
+    <!-- Подключаем скрипты в конце body -->
+    <script src="audioPlayer.js"></script>
+    <script src="audioPlayer2.js"></script>
 </body>
 </html>
