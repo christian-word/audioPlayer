@@ -1,20 +1,23 @@
 class AudioPlayer extends HTMLElement {
   constructor() {
     super();
-    this.audio = new Audio(this.getAttribute("src"));
     this.attachShadow({ mode: "open" });
+
+    this.audio = new Audio();
+    this.audio.src = this.getAttribute("src") || "";
+    this.audio.volume = 1;
 
     this.shadowRoot.innerHTML = `
       <style>
         .player-container {
-          display: flex;
+          display: inline-flex;
           align-items: center;
           gap: 10px;
           padding: 10px;
           background: #f5f5f5;
           border-radius: 15px;
-          width: 300px; /* Ограничиваем ширину */
-          max-width: 100%; /* Чтобы не выходило за экран */
+          width: 300px;
+          max-width: 100%;
         }
         .play-button {
           width: 40px;
@@ -30,10 +33,10 @@ class AudioPlayer extends HTMLElement {
         }
         .progress-bar {
           flex-grow: 1;
-          width: 100px; /* Длина ползунка */
+          width: 100px;
         }
         .volume-bar {
-          width: 60px; /* Размер громкости */
+          width: 60px;
         }
       </style>
       <div class="player-container">
@@ -51,9 +54,6 @@ class AudioPlayer extends HTMLElement {
     this.audio.addEventListener("timeupdate", () => this.updateProgress());
     this.progressBar.addEventListener("input", (e) => this.seekAudio(e));
     this.volumeBar.addEventListener("input", (e) => this.changeVolume(e));
-
-    // Устанавливаем начальную громкость
-    this.audio.volume = 1;
   }
 
   togglePlay() {
@@ -67,4 +67,18 @@ class AudioPlayer extends HTMLElement {
   }
 
   updateProgress() {
-    if (this.audio
+    if (this.audio.duration) {
+      this.progressBar.value = (this.audio.currentTime / this.audio.duration) * 100;
+    }
+  }
+
+  seekAudio(event) {
+    this.audio.currentTime = (event.target.value / 100) * this.audio.duration;
+  }
+
+  changeVolume(event) {
+    this.audio.volume = event.target.value / 100;
+  }
+}
+
+customElements.define("audio-player", AudioPlayer);
